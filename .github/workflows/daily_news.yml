@@ -37,6 +37,6 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add telugunewsoutput.html
+          git add index.html
           # Only commit if there are actual changes to prevent empty commits
-          git diff --quiet && git diff --staged --quiet || (git commit -m "chore: update telugunewsoutput.html [skip ci]" && git push)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore: update index.html [skip ci]" && git push)
