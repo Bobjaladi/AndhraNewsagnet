@@ -31,7 +31,7 @@ except ImportError:
 MAX_DESCRIPTION_WORDS = 50
 # ==============================================================================
 
-HTML_FILE = "telugunewsoutput.html"
+HTML_FILE = "index.html"
 
 # ===== TEXT CLEANUP & TRUNCATION =====
 
