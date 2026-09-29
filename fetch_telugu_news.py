@@ -191,6 +191,7 @@ class NewsRSSAgent:
         return final_results
 
     def save_output_as_html(self, results: List[Dict], filename: str = HTML_FILE):
+        # Simple, plain, easy-to-read page: no cards, no boxes, no shadows.
         parts = [
             "<!DOCTYPE html>",
             "<html lang='te'>",
@@ -199,40 +200,33 @@ class NewsRSSAgent:
             "  <meta name='viewport' content='width=device-width, initial-scale=1.0'>",
             "  <title>Telugu Current Affairs News</title>",
             "  <style>",
-            "    body { font-family: 'Nirmala UI', 'Noto Sans Telugu', Gautami, sans-serif; margin: 40px; background-color: #f4f6f8; color: #333; }",
-            "    .container { max-width: 800px; margin: 0 auto; background: #fff; padding: 40px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }",
-            "    h1 { text-align: center; color: #2c3e50; margin-bottom: 5px; }",
-            "    .date { text-align: center; color: #7f8c8d; margin-bottom: 40px; font-size: 16px; }",
-            "    .article { page-break-inside: avoid; margin-bottom: 40px; border-bottom: 1px solid #eee; padding-bottom: 30px; }",
-            "    .article:last-child { border-bottom: none; margin-bottom: 0; }",
-            "    .article-number { color: #e74c3c; font-size: 14px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }",
-            "    .headline { font-size: 26px; margin: 10px 0 15px 0; color: #2c3e50; line-height: 1.4; }",
-            "    .description { font-size: 18px; line-height: 1.7; color: #34495e; }",
-            "    .meta { font-size: 14px; color: #95a5a6; margin-top: 15px; }",
-            "    .meta a { color: #3498db; text-decoration: none; font-weight: bold; }",
-            "    .meta a:hover { text-decoration: underline; }",
+            "    body { font-family: 'Nirmala UI', 'Noto Sans Telugu', Gautami, sans-serif; margin: 0 auto; padding: 24px 20px 60px; max-width: 760px; background: #ffffff; color: #111111; line-height: 1.8; font-size: 20px; }",
+            "    h1 { font-size: 28px; margin: 0 0 6px 0; line-height: 1.4; }",
+            "    .date { color: #555555; font-size: 16px; margin-bottom: 30px; }",
+            "    .article { margin: 0; padding: 26px 0; border-top: 1px solid #cccccc; }",
+            "    .num { color: #555555; font-size: 15px; margin: 0 0 4px 0; }",
+            "    h2 { font-size: 26px; margin: 0 0 12px 0; line-height: 1.5; }",
+            "    p { margin: 0 0 12px 0; }",
+            "    .meta { color: #555555; font-size: 15px; }",
+            "    .meta a { color: #0645ad; }",
             "    @media print {",
-            "      body { background: #fff; margin: 0; }",
-            "      .container { box-shadow: none; padding: 20px; max-width: 100%; }",
-            "      .article { page-break-after: always; border-bottom: none; }",
+            "      .article { page-break-after: always; border-top: none; }",
             "    }",
             "  </style>",
             "</head>",
             "<body>",
-            "  <div class='container'>",
-            "    <h1>తెలుగు ప్రస్తుత వ్యవహారాలు (Current Affairs)</h1>",
-            f"    <div class='date'>{datetime.now().strftime('%d-%m-%Y')}</div>"
+            "  <h1>తెలుగు ప్రస్తుత వ్యవహారాలు (Current Affairs)</h1>",
+            f"  <div class='date'>{datetime.now().strftime('%d-%m-%Y')}</div>"
         ]
         
         for i, a in enumerate(results, 1):
-            parts.append(f"    <div class='article'>")
-            parts.append(f"      <div class='article-number'>Article {i} &bull; {html.escape(a.get('source', ''))}</div>")
-            parts.append(f"      <h2 class='headline'>{html.escape(a.get('headline', ''))}</h2>")
-            parts.append(f"      <p class='description'>{html.escape(a.get('short_description', ''))}</p>")
-            parts.append(f"      <div class='meta'>📅 {html.escape(a.get('date', ''))} &nbsp;|&nbsp; <a href='{html.escape(a.get('link', ''))}' target='_blank'>Read Full Article →</a></div>")
-            parts.append(f"    </div>")
+            parts.append("  <div class='article'>")
+            parts.append(f"    <div class='num'>{i}. {html.escape(a.get('source', ''))}</div>")
+            parts.append(f"    <h2>{html.escape(a.get('headline', ''))}</h2>")
+            parts.append(f"    <p>{html.escape(a.get('short_description', ''))}</p>")
+            parts.append(f"    <div class='meta'>{html.escape(a.get('date', ''))} &nbsp;|&nbsp; <a href='{html.escape(a.get('link', ''))}' target='_blank'>Read full article</a></div>")
+            parts.append("  </div>")
             
-        parts.append("  </div>")
         parts.append("</body>")
         parts.append("</html>")
         
